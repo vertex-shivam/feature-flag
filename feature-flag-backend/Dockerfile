@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY target/feature-flex-backend-0.0.1-SNAPSHOT.jar app.jar
+COPY target/feature-flag-backend-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
