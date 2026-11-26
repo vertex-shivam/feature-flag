@@ -29,13 +29,13 @@ jobs:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_DB: feature_flag
-          POSTGRES_USER: feature_flag_user
+          POSTGRES_DB: feature_flag_db
+          POSTGRES_USER: featureadmin
           POSTGRES_PASSWORD: ci_test_password
         ports:
-          - 5433:5432
+          - "5433:5432"
         options: >-
-          --health-cmd "pg_isready -U feature_flag_user -d feature_flag"
+          --health-cmd "pg_isready -U featureadmin -d feature_flag_db"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -58,9 +58,10 @@ jobs:
 
       - name: Build and test backend
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5433/feature_flag
-          SPRING_DATASOURCE_USERNAME: feature_flag_user
-          SPRING_DATASOURCE_PASSWORD: ci_test_password
+          DB_URL: jdbc:postgresql://localhost:5433/feature_flag_db
+          DB_USERNAME: featureadmin
+          DB_PASSWORD: ci_test_password
+          JWT_SECRET: VGhpc0lzQVN1cGVyU2VjcmV0S2V5Rm9yQ0lUZXN0aW5nMTIzNDU2Nzg=
         run: |
           chmod +x mvnw
           ./mvnw -B clean verify
