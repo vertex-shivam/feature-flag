@@ -121,14 +121,16 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Registration and login are public
+                        // Public endpoints — no authentication required
                         .requestMatchers(
+                                // Registration and login are public
                                 "/api/auth/register",
-                                "/api/auth/login"
+                                "/api/auth/login",
+                                // Feature evaluation remains publicly accessible
+                                "/api/evaluate/**",
+                                // Checks if api is alive
+                                "/api/health"
                         ).permitAll()
-
-                        // Feature evaluation remains publicly accessible
-                        .requestMatchers("/api/evaluate/**").permitAll()
 
                         // Everything else requires authentication
                         .anyRequest().authenticated()
